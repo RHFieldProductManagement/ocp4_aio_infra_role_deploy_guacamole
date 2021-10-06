@@ -111,7 +111,7 @@
   when: not guac_file.stat.exists
 
 - set_fact:
-    guacadmin_password: "{{ guac_pass['content'] | b64decode"
+    guacadmin_password: "{{ guac_pass['content'] | b64decode }}"
   when: guac_file.stat.exists
 
 - set_fact:
