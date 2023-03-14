@@ -59,15 +59,15 @@
   containers.podman.podman_image:
     name: "{{ item }}"
   loop:
-    - "quay.io/roxenham/guacamole"
-    - "quay.io/roxenham/guacd"
-    - "quay.io/roxenham/postgres"
+    - "quay.io/hgeaydem/guacamole"
+    - "quay.io/hgeaydem/guacd"
+    - "quay.io/hgeaydem/postgres"
 
 - name: Run postgres container for Guac
   containers.podman.podman_container:
     name: postgres
     state: started
-    image: quay.io/roxenham/postgres
+    image: quay.io/hgeaydem/postgres
     volume: "/usr/local/pgsql/data:/var/lib/postgresql/data"
     net: host
     env: "POSTGRES_PASSWORD=redhat"
@@ -79,7 +79,7 @@
 
 - name: Generate the initdb database content for postgres
   ansible.builtin.shell: >
-    podman run --rm quay.io/roxenham/guacamole
+    podman run --rm quay.io/hgeaydem/guacamole
     /opt/guacamole/bin/initdb.sh --postgres > /usr/local/pgsql/data/initdb.sql
   when: not database_stat.stat.exists
 
@@ -137,7 +137,7 @@
 #   containers.podman.podman_container:
 #     name: postgres
 #     state: started
-#     image: quay.io/roxenham/postgres
+#     image: quay.io/hgeaydem/postgres
 #     volume: "/usr/local/pgsql/data:/var/lib/postgresql/data"
 #     net: host
 #     env: "POSTGRES_PASSWORD=redhat"
@@ -186,14 +186,14 @@
   containers.podman.podman_container:
     name: guacd
     state: started
-    image: quay.io/roxenham/guacd
+    image: quay.io/hgeaydem/guacd
     net: host
 
 - name: Run Guacamole container
   containers.podman.podman_container:
     name: guacamole
     state: started
-    image: quay.io/roxenham/guacamole
+    image: quay.io/hgeaydem/guacamole
     net: host
     env:
       GUACD_HOSTNAME: 127.0.0.1
